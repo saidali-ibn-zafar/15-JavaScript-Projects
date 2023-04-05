@@ -29,7 +29,7 @@ const navbar = document.getElementById("nav");
 const topLink = document.querySelector(".top-link");
 // ********** fixed navbar ************
 window.addEventListener('scroll', function(){
-    console.log(window.pageYOffset);
+    // console.log(window.pageYOffset);
     const scrollHeight = window.pageYOffset;
     const navHeight = navbar.getBoundingClientRect().height;
     if(scrollHeight > navHeight){
@@ -57,8 +57,24 @@ scrollLinks.forEach(function(link){
         e.preventDefault();
         // navigate to specific spot
         const id = e.currentTarget.getAttribute('href').slice(1);
-        let element = document.offsetTop;
-        let position = element.offsetTop;
-        console.log
-    })
-})
+        let element = document.getElementById(id);
+        // claculate the heights 
+        const navHeight = navbar.getBoundingClientRect().height;
+        const containerHeight = linksContainer.getBoundingClientRect().height;
+        const fixedNav = navbar.classList.contains("fixed-nav");
+        let position = element.offsetTop - navHeight;
+        if(!fixedNav){
+            position = position - navHeight;
+        }
+        if(navHeight > 82){
+            position = position + containerHeight;
+        }
+        // console.log(position);
+        window.scrollTo({
+            left:0,
+            top:position,
+        });
+        linksContainer.style.height = 0;
+
+    });
+});
